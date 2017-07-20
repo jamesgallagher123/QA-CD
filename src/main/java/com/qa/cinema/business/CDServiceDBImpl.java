@@ -33,18 +33,19 @@ public class CDServiceDBImpl implements CDService {
 	public String createCD(String cd) {
 		CD aCD = util.getObjectForJSON(cd, CD.class);
 		manager.persist(aCD);
-		return "{\"message\": \"movie sucessfully added\"}";
+		return "{\"message\": \"cd sucessfully added\"}";
 	}
 
 	@Override
 	public String updateCD(Long id, String cd) {
-		CD updatedMovie = util.getObjectForJSON(cd, CD.class);
+		CD updatedCD = util.getObjectForJSON(cd, CD.class);
 		CD CDInDB = findCD(id);
+		updatedCD.setId(id);
 		if (CDInDB != null) {
-			CDInDB = updatedMovie;
+			CDInDB = updatedCD;
 			manager.merge(CDInDB);
 		}
-		return "{\"message\": \"movie sucessfully updated\"}";
+		return "{\"message\": \"cd sucessfully updated\"}";
 	}
 
 	@Override
@@ -53,11 +54,25 @@ public class CDServiceDBImpl implements CDService {
 		if (CDInDB != null) {
 			manager.remove(CDInDB);
 		}
-		return "{\"message\": \"movie sucessfully deleted\"}";
+		return "{\"message\": \"cd sucessfully deleted\"}";
 	}
 
 	private CD findCD(Long id) {
 		return manager.find(CD.class, id);
+	}
+
+	@Override
+	public String deleteAllCDs() {
+		Query query=manager.createQuery("Delete FROM CD");
+		query.executeUpdate();
+		return "{\"message\": \"all cds sucessfully deleted\"}";
+	}
+
+	@Override
+	public String getCD(Long id) {
+		Query query = manager.createQuery("Select m FROM CD m where m.id=:id").setParameter("id",id);
+		Collection<CD> cds = (Collection<CD>) query.getResultList();
+		return util.getJSONForObject(cds);
 	}
 
 }

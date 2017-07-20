@@ -31,4 +31,16 @@ public class CDServiceMapImpl implements CDService {
         return null;
     }
 
+    @Override
+    public String getCD(Long id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String deleteAllCDs() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

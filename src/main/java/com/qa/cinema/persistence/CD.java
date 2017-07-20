@@ -20,9 +20,9 @@ public class CD {
 	}
 
 	public CD(String artist, String genre, String title) {
-		this.title = title;
-		this.genre = genre;
 		this.artist = artist;
+		this.genre = genre;
+		this.title = title;
 	}
 
 	public Long getId() {
