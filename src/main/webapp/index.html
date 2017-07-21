@@ -1,50 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cinema">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" ui-sref="dashboard">Cinema</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a ui-sref="dashboard">Dashboard</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movie
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a ui-sref="addmovie">Add movie</a></li>
-                        <li><a ui-sref="getmovie">Get movies</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<h3>View All Cds</h3>
+<select size="10" id="CDBox"></select>
+<script>
 
-    <div ui-view></div>
+    index();
 
+    function getAllCDs() {
+        let request = new XMLHttpRequest();
+        request.open('GET', "http://localhost:8080/qacd/rest/cd/json/");
+        request.responseType = 'json';
+        request.send();
+        request.onload = function() {
+            let jsonObj = request.response;
+            populateBox(jsonObj);
+        }
+    }
 
-<link rel="stylesheet" href="scripts/bootstrap.min.css">
+    function populateBox(jsonObj) {
+        let CDArray = jsonObj;
+        let select = document.getElementById("CDBox");
+        for (let i = 0; i < CDArray.length; i++) {
+            let option = document.createElement('option');
+            option.text = "ID: " + CDArray[i].id + " " +
+                "Artist: " + CDArray[i].artist + " " +
+                "Genre: " + CDArray[i].genre + " " +
+                "Title: " + CDArray[i].title;
+            select.add(option, select.length);
+        }
+    }
 
-
-    <script src="scripts/jquery-2.1.4.min.js"></script>
-    <script src="scripts/angular.min.js"></script>
-    <script src="scripts/ui-router.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
-
-    <script src="app/app.js"></script>
-    <script src="app/app-state-manager.js"></script>
-
-    <script src="app/service/dal.js"></script>
-    <script src="app/service/movie.js"></script>
-
-    <script src="app/feature/dashboard/dashboard-controller.js"></script>
-    <script src="app/feature/movie/add-movie/add-movie-controller.js"></script>
-    <script src="app/feature/movie/get-movie/get-movie-controller.js"></script>
-
-
+</script>
 </body>
 </html>
