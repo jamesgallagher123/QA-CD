@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 
 import com.qa.cinema.business.CDService;
 
-@Path("/cinema")
+@Path("/cd")
 public class CDEndpoint {
 
     @Inject
@@ -41,8 +41,15 @@ public class CDEndpoint {
     @Path("/json/{id}")
     @DELETE
     @Produces({ "application/json" })
-    public String deleteCD(@PathParam("id") Long id) {
-        return service.deleteCD(id);
+    public String deleteCD(@PathParam("id") Long id) { return service.deleteCD(id); }
 
-    }
+    @Path("/json")
+    @DELETE
+    @Produces({ "application/json" })
+    public String deleteAllCDs() { return service.deleteAllCDs(); }
+
+    @Path("/json/{id}")
+    @GET
+    @Produces({ "application/json" })
+    public String getCD(@PathParam("id") Long id) { return service.getCD(id); }
 }

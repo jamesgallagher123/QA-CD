@@ -74,5 +74,4 @@ public class CDServiceDBImpl implements CDService {
 		Collection<CD> cds = (Collection<CD>) query.getResultList();
 		return util.getJSONForObject(cds);
 	}
-
 }
